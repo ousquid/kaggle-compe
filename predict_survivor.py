@@ -70,10 +70,28 @@ def main():
     y = df.Survived
 
     train_x, test_x, train_y, test_y = \
-        train_test_split(x, y, test_size=0.0, random_state=None)
+        train_test_split(x, y, test_size=0.0, random_state=666)
 
-    clf = SGDClassifier(loss="hinge", penalty="l2")
+    from sklearn.svm import SVC
+    #clf = SVC(kernel='linear', C=40.0, random_state=0)
+    clf = SVC(kernel='rbf', C=6000, gamma=0.00005, random_state=0)
     clf.fit(train_x, train_y)
+    
+    #from sklearn.model_selection import GridSearchCV
+    #from sklearn.pipeline import Pipeline
+
+    #log_range = [0.0001, 0.01, 0.1, 1.0, 10.0, 100.0]
+    #log_grid = [{'gamma': log_range, 'C': log_range}]
+    #iris_gs = GridSearchCV(estimator = SVC(kernel='rbf', random_state=0),
+    #              param_grid = log_grid, cv=10, n_jobs=-1)
+    #iris_gs.fit(train_x, train_y)
+    #print("cross validation accuracy:{}".format(iris_gs.best_score_) )
+    #print("best gamma:{}".format(iris_gs.best_params_['gamma']) )
+    #print("best C:{}".format(iris_gs.best_params_['C']) )
+
+
+    #clf = SGDClassifier(loss="hinge", penalty="l2")
+    #clf.fit(train_x, train_y)
     #print(clf.score(test_x, test_y) )
     
     pred_y = clf.predict(test_df)
